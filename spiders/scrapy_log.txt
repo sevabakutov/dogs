@@ -1,0 +1,146 @@
+2024-08-20 14:04:44 [scrapy.utils.log] INFO: Scrapy 2.11.1 started (bot: grayhound)
+2024-08-20 14:04:44 [scrapy.utils.log] INFO: Versions: lxml 5.1.0.0, libxml2 2.10.3, cssselect 1.2.0, parsel 1.9.0, w3lib 2.1.2, Twisted 24.3.0, Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)], pyOpenSSL 24.1.0 (OpenSSL 3.2.1 30 Jan 2024), cryptography 42.0.5, Platform Windows-11-10.0.22631-SP0
+2024-08-20 14:04:44 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-20 14:04:44 [asyncio] DEBUG: Using selector: SelectSelector
+2024-08-20 14:04:44 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-20 14:04:44 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.windows_events._WindowsSelectorEventLoop
+2024-08-20 14:04:44 [scrapy.extensions.telnet] INFO: Telnet Password: 18212429445bb178
+2024-08-20 14:04:44 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2024-08-20 14:04:44 [scrapy.crawler] INFO: Overridden settings:
+{'BOT_NAME': 'grayhound',
+ 'DOWNLOAD_DELAY': 2.0,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'scrapy_log.txt',
+ 'NEWSPIDER_MODULE': 'grayhound.spiders',
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'RETRY_HTTP_CODES': [502, 503, 504, 522, 524, 408],
+ 'RETRY_TIMES': 10,
+ 'SPIDER_MODULES': ['grayhound.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'}
+2024-08-20 14:04:45 [urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): headers.scrapeops.io:80
+2024-08-20 14:04:45 [urllib3.connectionpool] DEBUG: http://headers.scrapeops.io:80 "GET /v1/user-agents?api_key=44b33883-d105-49fb-8b89-83146493ce24 HTTP/1.1" 301 178
+2024-08-20 14:04:45 [urllib3.connectionpool] DEBUG: Starting new HTTPS connection (1): headers.scrapeops.io:443
+2024-08-20 14:04:45 [urllib3.connectionpool] DEBUG: https://headers.scrapeops.io:443 "GET /v1/user-agents?api_key=44b33883-d105-49fb-8b89-83146493ce24 HTTP/1.1" 200 1232
+2024-08-20 14:04:45 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'grayhound.middlewares.ScrapeOpsFakeUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'grayhound.middlewares.TooManyRequestsRetryMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-20 14:04:45 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-20 14:04:46 [scrapy.middleware] INFO: Enabled item pipelines:
+['grayhound.pipelines.DogPipeline']
+2024-08-20 14:04:46 [scrapy.core.engine] INFO: Spider opened
+2024-08-20 14:04:46 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2024-08-20 14:04:46 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2024-08-20 14:04:46 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "C:\machine learning\gb_greyhound\venv\Lib\site-packages\scrapy\core\engine.py", line 181, in _next_request
+    request = next(self.slot.start_requests)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\machine learning\gb_greyhound\grayhound\grayhound\grayhound\spiders\race_spider.py", line 34, in start_requests
+    yield scrapy.Request(self.get_proxy_url(url), callback=self.parse)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\machine learning\gb_greyhound\grayhound\grayhound\grayhound\spiders\race_spider.py", line 39, in get_proxy_url
+    raise ValueError("API key has not been set yet")
+ValueError: API key has not been set yet
+2024-08-20 14:04:46 [scrapy.core.engine] INFO: Closing spider (finished)
+2024-08-20 14:04:46 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'elapsed_time_seconds': 0.016004,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2024, 8, 20, 12, 4, 46, 738386, tzinfo=datetime.timezone.utc),
+ 'log_count/DEBUG': 7,
+ 'log_count/ERROR': 1,
+ 'log_count/INFO': 10,
+ 'start_time': datetime.datetime(2024, 8, 20, 12, 4, 46, 722382, tzinfo=datetime.timezone.utc)}
+2024-08-20 14:04:46 [scrapy.core.engine] INFO: Spider closed (finished)
+2024-08-20 14:05:15 [scrapy.utils.log] INFO: Scrapy 2.11.1 started (bot: grayhound)
+2024-08-20 14:05:15 [scrapy.utils.log] INFO: Versions: lxml 5.1.0.0, libxml2 2.10.3, cssselect 1.2.0, parsel 1.9.0, w3lib 2.1.2, Twisted 24.3.0, Python 3.12.1 (tags/v3.12.1:2305ca5, Dec  7 2023, 22:03:25) [MSC v.1937 64 bit (AMD64)], pyOpenSSL 24.1.0 (OpenSSL 3.2.1 30 Jan 2024), cryptography 42.0.5, Platform Windows-11-10.0.22631-SP0
+2024-08-20 14:05:15 [scrapy.addons] INFO: Enabled addons:
+[]
+2024-08-20 14:05:15 [asyncio] DEBUG: Using selector: SelectSelector
+2024-08-20 14:05:15 [scrapy.utils.log] DEBUG: Using reactor: twisted.internet.asyncioreactor.AsyncioSelectorReactor
+2024-08-20 14:05:15 [scrapy.utils.log] DEBUG: Using asyncio event loop: asyncio.windows_events._WindowsSelectorEventLoop
+2024-08-20 14:05:15 [scrapy.extensions.telnet] INFO: Telnet Password: 847b7e2eb836d31e
+2024-08-20 14:05:15 [scrapy.middleware] INFO: Enabled extensions:
+['scrapy.extensions.corestats.CoreStats',
+ 'scrapy.extensions.telnet.TelnetConsole',
+ 'scrapy.extensions.logstats.LogStats']
+2024-08-20 14:05:15 [scrapy.crawler] INFO: Overridden settings:
+{'BOT_NAME': 'grayhound',
+ 'DOWNLOAD_DELAY': 2.0,
+ 'FEED_EXPORT_ENCODING': 'utf-8',
+ 'LOG_FILE': 'scrapy_log.txt',
+ 'NEWSPIDER_MODULE': 'grayhound.spiders',
+ 'REQUEST_FINGERPRINTER_IMPLEMENTATION': '2.7',
+ 'RETRY_HTTP_CODES': [502, 503, 504, 522, 524, 408],
+ 'RETRY_TIMES': 10,
+ 'SPIDER_MODULES': ['grayhound.spiders'],
+ 'TWISTED_REACTOR': 'twisted.internet.asyncioreactor.AsyncioSelectorReactor'}
+2024-08-20 14:05:15 [urllib3.connectionpool] DEBUG: Starting new HTTP connection (1): headers.scrapeops.io:80
+2024-08-20 14:05:15 [urllib3.connectionpool] DEBUG: http://headers.scrapeops.io:80 "GET /v1/user-agents?api_key=44b33883-d105-49fb-8b89-83146493ce24 HTTP/1.1" 301 178
+2024-08-20 14:05:15 [urllib3.connectionpool] DEBUG: Starting new HTTPS connection (1): headers.scrapeops.io:443
+2024-08-20 14:05:16 [urllib3.connectionpool] DEBUG: https://headers.scrapeops.io:443 "GET /v1/user-agents?api_key=44b33883-d105-49fb-8b89-83146493ce24 HTTP/1.1" 200 1150
+2024-08-20 14:05:16 [scrapy.middleware] INFO: Enabled downloader middlewares:
+['scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware',
+ 'scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware',
+ 'scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware',
+ 'grayhound.middlewares.ScrapeOpsFakeUserAgentMiddleware',
+ 'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware',
+ 'grayhound.middlewares.TooManyRequestsRetryMiddleware',
+ 'scrapy.downloadermiddlewares.retry.RetryMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware',
+ 'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware',
+ 'scrapy.downloadermiddlewares.redirect.RedirectMiddleware',
+ 'scrapy.downloadermiddlewares.cookies.CookiesMiddleware',
+ 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware',
+ 'scrapy.downloadermiddlewares.stats.DownloaderStats']
+2024-08-20 14:05:16 [scrapy.middleware] INFO: Enabled spider middlewares:
+['scrapy.spidermiddlewares.httperror.HttpErrorMiddleware',
+ 'scrapy.spidermiddlewares.offsite.OffsiteMiddleware',
+ 'scrapy.spidermiddlewares.referer.RefererMiddleware',
+ 'scrapy.spidermiddlewares.urllength.UrlLengthMiddleware',
+ 'scrapy.spidermiddlewares.depth.DepthMiddleware']
+2024-08-20 14:05:16 [scrapy.middleware] INFO: Enabled item pipelines:
+['grayhound.pipelines.DogPipeline']
+2024-08-20 14:05:16 [scrapy.core.engine] INFO: Spider opened
+2024-08-20 14:05:16 [scrapy.extensions.logstats] INFO: Crawled 0 pages (at 0 pages/min), scraped 0 items (at 0 items/min)
+2024-08-20 14:05:16 [scrapy.extensions.telnet] INFO: Telnet console listening on 127.0.0.1:6023
+2024-08-20 14:05:16 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "C:\machine learning\gb_greyhound\venv\Lib\site-packages\scrapy\core\engine.py", line 181, in _next_request
+    request = next(self.slot.start_requests)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\machine learning\gb_greyhound\grayhound\grayhound\grayhound\spiders\race_spider.py", line 34, in start_requests
+    yield scrapy.Request(self.get_proxy_url(url), callback=self.parse)
+                         ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\machine learning\gb_greyhound\grayhound\grayhound\grayhound\spiders\race_spider.py", line 39, in get_proxy_url
+    raise ValueError("API key has not been set yet")
+ValueError: API key has not been set yet
+2024-08-20 14:05:16 [scrapy.core.engine] INFO: Closing spider (finished)
+2024-08-20 14:05:16 [scrapy.statscollectors] INFO: Dumping Scrapy stats:
+{'elapsed_time_seconds': 0.0,
+ 'finish_reason': 'finished',
+ 'finish_time': datetime.datetime(2024, 8, 20, 12, 5, 16, 831696, tzinfo=datetime.timezone.utc),
+ 'log_count/DEBUG': 7,
+ 'log_count/ERROR': 1,
+ 'log_count/INFO': 10,
+ 'start_time': datetime.datetime(2024, 8, 20, 12, 5, 16, 831696, tzinfo=datetime.timezone.utc)}
+2024-08-20 14:05:16 [scrapy.core.engine] INFO: Spider closed (finished)
