@@ -31,8 +31,8 @@ def main():
                       "Далее обязательно указываеться диапозон . Используеться аргумент -date и потом через пробел дата в формате 'dd/mm/yyyy'."
                       "Последний аргумент это грейды. Они могут быть: \n\t-all (все грейды), \n\t-gen (от слова general, основные, от A1 до А10)"
                       ", \n\t-hp (HP), \n\t-cus (кастомные). \nЧтобы прописать желающие грейды, после аргумента cus, нужно открыть двойные кавычки и через пробел прописать грейды.\n\n"
-                      "Примеры использования:\n\tpython main.py predict\n\tpython main.py estimate -dist 480 -date 04/06/2024 31/08/2024 -all"
-                      "\n\tpython main.py estimate -dist 480 -date 04/06/2024 31/08/2024 -cus 'A2 A6 HP A3' (!!ДВОЙНЫЕ КАВЫЧКИ)!!")
+                      "Примеры использования:\n\tpython main.py predict\n\tpython main.py estimate -dist 480 -date 04/06/2024 31/08/2024 12/12/2022 12/12/2023-all"
+                      "\n\tpython main.py estimate -dist 480 -date 04/06/2024 31/08/2024 12/12/2022 12/12/2023 -cus 'A2 A6 HP A3' (!!ДВОЙНЫЕ КАВЫЧКИ)!!")
 
             case "predict":
                 dfs_small, dfs_big = pred_df_preprocessing()
@@ -40,8 +40,11 @@ def main():
                 make_predictions(dfs_big)
 
             case "estimate":
-                grades = get_grade_types(sys.argv[7])
-                train_df, test_df = get_dfs(sys.argv[3], sys.argv[5], sys.argv[6])
+                if len(sys.argv) > 9:
+                    grades = get_grade_types(sys.argv[8], sys.argv[9])
+                else:
+                    grades = get_grade_types(sys.argv[8])
+                train_df, test_df = get_dfs(sys.argv[3], sys.argv[5], sys.argv[6], sys.argv[7], sys.argv[8])
                 train_df_prepared = prepare_dataset(train_df, grades)
                 test_df_prepared = prepare_dataset(test_df, grades)
                 train_model(train_df_prepared, sys.argv[3], sys.argv[5], sys.argv[6])

@@ -17,7 +17,7 @@ from settings import ENCODERS_DIR, IMPUTERS_DIR, MODELS_DIR, DATA_DIR, DATASET_D
 
 logger = GHLogger("statistic")
 
-def get_dfs(dist, start_date, end_date):
+def get_dfs(dist, start_date_train, end_date_train, start_date_pred, end_date_pred):
     file_path = os.path.join(DATA_DIR, "train", "datasets", f"dataset_{dist}.0.csv")
     if os.path.exists(file_path):
         df = pd.read_csv(file_path, low_memory=False)
@@ -27,8 +27,10 @@ def get_dfs(dist, start_date, end_date):
 
     df['raceDate'] = pd.to_datetime(df['raceDate'], format='%d/%m/%Y')
 
-    result_df = df[(df['raceDate'] >= start_date) & (df['raceDate'] <= end_date)]
-    predict_df = df[(df['raceDate'] < start_date) & (df['raceDate'] > end_date)]
+    result_df = df[(df['raceDate'] >= start_date_train) & (df['raceDate'] <= end_date_train)]
+    # predict_df = df[(df['raceDate'] < start_date) | (df['raceDate'] > end_date)]
+    predict_df = df[(df['raceDate'] >= start_date_pred) & (df['raceDate'] <= end_date_pred)]
+
     # predict_df.to_csv(os.path.join(DATASET_DIR, "statistic"))
 
     return result_df, predict_df
