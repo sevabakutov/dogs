@@ -1,0 +1,45 @@
+import scrapy
+
+class GrayhoundItem(scrapy.Item):
+    raceDate = scrapy.Field()
+    meetingId = scrapy.Field()
+    trackName = scrapy.Field()
+
+    raceTime = scrapy.Field()
+    raceId = scrapy.Field()
+    raceNumber = scrapy.Field()
+    raceType = scrapy.Field()
+    raceHandicap = scrapy.Field()
+    raceClass = scrapy.Field()
+    raceDistance = scrapy.Field()
+    racePrizes = scrapy.Field()
+    raceGoing = scrapy.Field()
+    raceForecast = scrapy.Field()
+    raceTricast = scrapy.Field()
+
+    trapNumber = scrapy.Field()
+    trapHandicap = scrapy.Field()
+
+    dogId = scrapy.Field()
+    dogName = scrapy.Field()
+    dogSire = scrapy.Field()
+    dogBorn = scrapy.Field()
+    dogColour = scrapy.Field()
+    dogSex = scrapy.Field()
+    dogSeason = scrapy.Field()
+
+    trainerName = scrapy.Field()
+    ownerName = scrapy.Field()
+
+    SP = scrapy.Field()
+    resultPosition = scrapy.Field()
+    resultMarketPos = scrapy.Field()
+    resultMarketCnt = scrapy.Field()
+    resultPriceNumerator = scrapy.Field()
+    resultPriceDenominator = scrapy.Field()
+    resultBtnDistance = scrapy.Field()
+    resultSectionalTime = scrapy.Field()
+    resultComment = scrapy.Field()
+    resultRunTime = scrapy.Field()
+    resultDogWeight = scrapy.Field()
+    resultAdjustedTime = scrapy.Field()

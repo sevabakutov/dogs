@@ -1,0 +1,9 @@
+.gitattributes
+
+/cli_project/target
+/cli_project/Cargo.lock
+
+/ml_project/.secret
+
+/scrapy_project/.secret
+/scrapy_project/logs

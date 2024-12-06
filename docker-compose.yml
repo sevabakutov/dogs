@@ -1,0 +1,17 @@
+services:
+  cli:
+    build:
+      context: ./cli_project
+
+  ml:
+    build:
+      context: ./ml_project
+    volumes:
+      - ./data:/shared-data
+
+  scrapy:
+    build:
+      context: ./scrapy_project
+
+    volumes:
+      - ./data:/shared-data
