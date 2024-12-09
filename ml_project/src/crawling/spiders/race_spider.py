@@ -1,8 +1,7 @@
 import json
 import scrapy
-import settings
 from urllib.parse import urlencode
-from items.dog import DogItem
+from crawling.items.dog import DogItem
 
 
 class NewRaceSpider(scrapy.Spider):
@@ -11,7 +10,7 @@ class NewRaceSpider(scrapy.Spider):
 
     custom_settings = {
         'ITEM_PIPELINES': {
-            'utils.pipelines.DogPipeline': 400,
+            'crawling.pipelines.dog_pipeline.DogPipeline': 400,
         }
     }
 

@@ -5,7 +5,7 @@ import scrapy
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
-from items.grayhound import GrayhoundItem
+from crawling.items.grayhound import GrayhoundItem
 from urllib.parse import urlencode
 
 

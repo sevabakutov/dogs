@@ -3,36 +3,31 @@
 
 mod private
 {
-  use std::
+  use reqwest::blocking::Client;
+  use crate::commands::dogs::ScriptResponse;
+
+  pub fn command() 
   {
-    path::Path,
-    process::Command,
-  };
+    let client = Client::new();
 
-  pub fn command()
-  {
-    let working_dir = Path::new( "C:\\projects\\git\\dogs" );
-    let executable = "python";
-    let script_path = Path::new( "C:\\projects\\git\\dogs\\scripts\\predict.py" );
-    let script_args = vec![ "predict" ];
+    let response = client
+    .post( "http://dogs-ml:5000/predict" )
+    .send()
+    .expect( "Failed to send request" );
 
-    println!( "{:?}", script_path );
-    println!( "{:?}", script_args );
-
-    let process = Command::new( executable )
-    .current_dir( working_dir )
-    .arg( script_path )
-    .args( &script_args )
-    .output()
-    .expect( "Failed to execute process" );
-
-    if process.status.success()
+    if response.status().is_success() 
     {
-      println!( "Success!" );
-    }
+      let script_response : ScriptResponse = response.json().unwrap();
+      match script_response.status.as_str() 
+      {
+        "success" => println!( "Success:\n{}", script_response.output.unwrap_or_default() ),
+        "error" => eprintln!( "Error:\n{}", script_response.error.unwrap_or_default() ),
+        _ => eprintln!( "Unexpected response" ),
+      }
+    } 
     else 
     {
-      eprintln!( "Error\n{}", String::from_utf8_lossy( &process.stderr ) );
+      eprintln!( "HTTP Error: {}", response.status() );
     }
   }
 }

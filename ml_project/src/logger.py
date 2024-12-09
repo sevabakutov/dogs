@@ -8,26 +8,27 @@ class GHLogger():
         self._setup_logger()
 
     def _setup_logger(self) -> None:
-        self.logger.setLevel("DEBUG")
-        formatter = logging.Formatter("{asctime} - {levelname} - {message}", style="{", datefmt="%Y-%m-%d %H:%m")
+        if not self.logger.hasHandlers():
+            self.logger.setLevel("DEBUG")
+            formatter = logging.Formatter("{asctime} - {levelname} - {message}", style="{", datefmt="%Y-%m-%d %H:%m")
 
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel("DEBUG")
-        console_handler.setFormatter(formatter)
-        console_handler.addFilter(self.shows_only_debug)
-        self.logger.addHandler(console_handler)
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel("DEBUG")
+            console_handler.setFormatter(formatter)
+            console_handler.addFilter(self.shows_only_debug)
+            self.logger.addHandler(console_handler)
 
-        file_handler = logging.FileHandler(self.get_log_filename(), mode="a", encoding="utf-8")
-        file_handler.setLevel("WARNING")
-        file_handler.setFormatter(formatter)
-        self.logger.addHandler(file_handler)
+            file_handler = logging.FileHandler(self.get_log_filename(), mode="a", encoding="utf-8")
+            file_handler.setLevel("WARNING")
+            file_handler.setFormatter(formatter)
+            self.logger.addHandler(file_handler)
 
     
     def shows_only_debug(self, record: str) -> str:
         return record.levelname == "DEBUG"
 
     def get_log_filename(self) -> str:
-        dirname = os.path.join(os.getcwd(), 'logs')
+        dirname = os.path.join(os.getcwd(), '..', 'logs')
         os.makedirs(dirname, exist_ok=True)
         curr_date = datetime.today().strftime('%Y-%m-%d')
         return os.path.join(dirname, f'warnings_{curr_date}.log')

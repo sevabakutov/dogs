@@ -1,9 +1,18 @@
 .gitattributes
 
+/data
+/venv
+
 /cli_project/target
 /cli_project/Cargo.lock
 
 /ml_project/.secret
+/ml_project/venv
+/ml_project/logs
+/ml_project/data/to_pred
+/ml_project/data/train
 
-/scrapy_project/.secret
-/scrapy_project/logs
+/scripts/bin/build
+/scripts/bin/dist
+/scripts/bin/venv
+/scripts/bin/*.spec

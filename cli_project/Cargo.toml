@@ -3,7 +3,13 @@ name = "dogs"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "dogs"
+path = "src/bin/main.rs"
+
 [dependencies]
+reqwest = { version = "0.12.9", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
 clap = { version = "4.5.22", features = ["derive"] }
 dotenv = "0.15.0"
 mod_interface = "0.30.0"

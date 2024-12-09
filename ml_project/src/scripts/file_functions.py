@@ -1,12 +1,13 @@
-import hashlib
 import os
-from datetime import datetime
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-from dogs.ml_project.src.settings import DATA_DIR, MODELS_DIR, IMPUTERS_DIR, ENCODERS_DIR
 import joblib
+import hashlib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from datetime import datetime
+from matplotlib.backends.backend_pdf import PdfPages
+from settings import DATA_DIR, MODELS_DIR, IMPUTERS_DIR, ENCODERS_DIR
 
 from logger import GHLogger
 
@@ -44,6 +45,8 @@ def get_final_file() -> str:
     return os.path.join(DATA_DIR, "temp.csv")
 
 def load_model(dist, start_date=None, end_date=None, grade=None):
+    logger.debug("Loading model...")
+
     if grade:
         file_path = os.path.join(MODELS_DIR, "random_forest_class", f'model_{dist}_{grade}.pkl')
     elif start_date:
@@ -57,6 +60,8 @@ def load_model(dist, start_date=None, end_date=None, grade=None):
     return None
 
 def load_imputer(dist, start_date=None, end_date=None, grade=None):
+    logger.debug("Loading imputer...")
+
     if grade:
         file_path = os.path.join(IMPUTERS_DIR, f'imputer_{dist}_{grade}.pkl')
     elif start_date:
@@ -70,6 +75,8 @@ def load_imputer(dist, start_date=None, end_date=None, grade=None):
     return None
 
 def load_encoder(dist, start_date=None, end_date=None, grade=None):
+    logger.debug("Loading encoder...")
+
     if grade:
         file_path = os.path.join(ENCODERS_DIR, f'encoder_{dist}_{grade}.pkl')
     elif start_date:
@@ -84,7 +91,10 @@ def load_encoder(dist, start_date=None, end_date=None, grade=None):
 
 
 def save_race_results_to_pdf(race_results, name: str, grade=None) -> None:
+    logger.debug("Saving results to a PDF file...")
+
     dir_path = os.path.join(DATA_DIR, "results")
+    os.makedirs(dir_path, exist_ok=True)
     filename = os.path.join(dir_path, name)
 
     with PdfPages(filename) as pdf:
@@ -95,15 +105,13 @@ def save_race_results_to_pdf(race_results, name: str, grade=None) -> None:
                 race_time = datetime.strptime(row.race_date_time, '%Y-%m-%d %H:%M')
             except ValueError as e:
                 logger.exception(f"Error parsing date: {e}")
-                race_time = row.race_date_time  # В случае ошибки используем строковое представление
+                race_time = row.race_date_time
 
             race_distance = row.raceDistance
             dog_name = row.name
 
-            # Собираем вероятности для каждого места
             probabilities = np.round(predictions, 2)
 
-            # Если гонка уже есть, добавляем результаты, иначе создаем новую запись
             if race_time not in grouped_results:
                 grouped_results[race_time] = {'race_distance': race_distance, 'dogs': []}
 
@@ -117,15 +125,13 @@ def save_race_results_to_pdf(race_results, name: str, grade=None) -> None:
                 '6th place': probabilities[5]
             })
 
-        # Теперь для каждой гонки создаем таблицу
         for race_time, race_info in grouped_results.items():
             race_distance = race_info['race_distance']
             dogs = race_info['dogs']
 
-            # Создаем DataFrame для всей гонки
             df = pd.DataFrame(dogs)
 
-            fig, ax = plt.subplots(figsize=(10, len(dogs) * 0.5 + 2))  # Зависимость высоты от количества строк
+            fig, ax = plt.subplots(figsize=(10, len(dogs) * 0.5 + 2))
             ax.axis('tight')
             ax.axis('off')
             ax.table(cellText=df.values, colLabels=df.columns, cellLoc='center', loc='center')

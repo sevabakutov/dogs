@@ -5,9 +5,10 @@ import numpy as np
 import pandas as pd
 import random
 
-from logger import GHLogger
 from settings import DATA_DIR
-from file_functions import get_pred_file, load_dataset
+from logger import GHLogger
+from scripts.file_functions import get_pred_file, load_dataset
+from crawling.scripts.race_spider import start_race_spider
 
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -176,8 +177,10 @@ def pred_df_preprocessing() -> dict:
     try:
         pred_filename = get_pred_file()
         if not os.path.exists(pred_filename):
-            logger.debug("Starting to crawl page with results.\n")
-            start_spider()
+            logger.debug("Crawling page with races has started.\n")
+            start_race_spider()
+            logger.debug("Crawling page with races has finished.")
+            
 
         if not os.path.exists(pred_filename):
             logger.error(f"'pred_filename': {pred_filename}: incorrect path!")
@@ -254,6 +257,7 @@ def pred_df_preprocessing() -> dict:
         logger.debug("Filetring dataframe with distance > 305")
         dfs_big = filter_df_big(df_big)
 
+        logger.debug("Filter passed success!")
         return dfs_small, dfs_big
 
     except Exception as e:

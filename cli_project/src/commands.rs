@@ -5,6 +5,7 @@
 
 pub mod dogs;
 mod dogs_predict;
+mod dogs_estimate;
 
 mod private
 {

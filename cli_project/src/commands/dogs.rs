@@ -6,9 +6,18 @@ mod private
   use crate::commands::
   {
     dogs_predict,
+    dogs_estimate
   };
-
   use clap::Subcommand;
+  use serde::Deserialize;
+
+  #[ derive( Deserialize ) ]
+  pub struct ScriptResponse 
+  {
+    pub status : String,
+    pub output : Option< String >,
+    pub error : Option< String >,
+  }
 
   #[ derive( Debug, Subcommand ) ]
   pub enum Command
@@ -16,7 +25,11 @@ mod private
     #[ command ( name = "predict" ) ]
     Predict,
 
-    // Estimate,
+    #[ command ( name = "estimate" ) ]
+    Estimate
+    (
+      dogs_estimate::Args
+    )
   }
 
   pub fn command
@@ -29,6 +42,11 @@ mod private
       Command::Predict => 
       {
         dogs_predict::command();
+      },
+
+      Command::Estimate( args ) =>
+      {
+        dogs_estimate::command( args );
       }
     }
   }
@@ -37,5 +55,6 @@ mod private
 pub use private::
 {
   command,
-  Command
+  Command,
+  ScriptResponse
 };

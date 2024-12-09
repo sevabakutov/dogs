@@ -1,16 +1,15 @@
 import re
 import pandas as pd
+
 from datetime import timedelta, datetime
-from preprocessing import pred_df_preprocessing
-from file_functions import save_race_results_to_pdf, load_model, load_imputer, load_encoder
+from scripts.file_functions import save_race_results_to_pdf, load_model, load_imputer, load_encoder
 from logger import GHLogger
 
 logger = GHLogger()
 
-def predict(dfs):
+def make_predictions(dfs):
+    logger.debug("Make predictions")
     columns_cat = ['raceClass', 'race_grade_1', 'race_grade_2', 'race_grade_3', 'race_grade_4', 'race_grade_5']
-    sec_time_columns = ['sec_time_1', 'sec_time_2', 'sec_time_3', 'sec_time_4', 'sec_time_5']
-    columns_to_drop = ['name', 'raceDistance', 'race_date_time']
 
     try:
         for dist, df in dfs.items():
@@ -21,7 +20,7 @@ def predict(dfs):
                     df_480 = df_480.drop(columns_cat, axis=1)
 
                     if grade == 'HP':
-                        df_480 = df_480.drop(sec_time_columns, axis=1)
+                        df_480 = df_480.drop(['sec_time_1', 'sec_time_2', 'sec_time_3', 'sec_time_4', 'sec_time_5'], axis=1)
 
                     if re.match(r'^OR.*', grade):
                         encoder = load_encoder(dist=dist, grade=grade)
@@ -36,16 +35,16 @@ def predict(dfs):
 
                     imputer = load_imputer(dist=dist, grade=grade)
                     if not imputer:
-                        logger.error(f"Not imputer for distance: {dist}, grade: {grade}")
+                        logger.debug(f"Not imputer for distance: {dist}, grade: {grade}")
                         continue
 
                     model = load_model(dist=dist, grade=grade)
                     if not model:
-                        logger.error(f"Not model for distance: {dist}, grade: {grade}")
+                        logger.debug(f"Not model for distance: {dist}, grade: {grade}")
                         continue
 
-                    df_nrr = df_480[columns_to_drop]
-                    df_480 = df_480.drop(columns_to_drop, axis=1)
+                    df_nrr = df_480[['name', 'raceDistance', 'race_date_time']]
+                    df_480 = df_480.drop(['name', 'raceDistance', 'race_date_time'], axis=1)
 
                     X = imputer.transform(df_480)
                     predictions = model.predict_proba(X)
@@ -58,7 +57,7 @@ def predict(dfs):
 
                     save_race_results_to_pdf(race_results, name, grade)
 
-            else:
+            else:                
                 encoder = load_encoder(dist)
                 if not encoder:
                     logger.error(f"Not encoder for distance: {dist}")
@@ -71,16 +70,16 @@ def predict(dfs):
 
                 imputer = load_imputer(dist)
                 if not imputer:
-                    logger.error(f"Not imputer for distance: {dist}")
+                    logger.debug(f"Not imputer for distance: {dist}")
                     continue
 
                 model = load_model(dist)
                 if not model:
-                    logger.error(f"Not model for distance: {dist}")
+                    logger.debug(f"Not model for distance: {dist}")
                     continue
 
-                df_nrr = df[columns_to_drop]
-                df = df.drop(columns_to_drop, axis=1)
+                df_nrr = df[['name', 'raceDistance', 'race_date_time']]
+                df = df.drop(['name', 'raceDistance', 'race_date_time'], axis=1)
 
                 X = imputer.transform(df)
                 predictions = model.predict_proba(X)
@@ -95,9 +94,3 @@ def predict(dfs):
 
     except Exception as ex:
         logger.exception(f"{ex}, DISTANCE: {dist}")
-
-
-if __name__ == "__main__":
-    dfs_small, dfs_big = pred_df_preprocessing()
-    predict(dfs_small)
-    predict(dfs_big)
