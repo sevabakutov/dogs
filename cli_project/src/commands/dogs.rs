@@ -9,15 +9,6 @@ mod private
     dogs_estimate
   };
   use clap::Subcommand;
-  use serde::Deserialize;
-
-  #[ derive( Deserialize ) ]
-  pub struct ScriptResponse 
-  {
-    pub status : String,
-    pub output : Option< String >,
-    pub error : Option< String >,
-  }
 
   #[ derive( Debug, Subcommand ) ]
   pub enum Command
@@ -56,5 +47,4 @@ pub use private::
 {
   command,
   Command,
-  ScriptResponse
 };

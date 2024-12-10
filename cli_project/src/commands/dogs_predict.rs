@@ -3,31 +3,22 @@
 
 mod private
 {
-  use reqwest::blocking::Client;
-  use crate::commands::dogs::ScriptResponse;
+  use std::process::Command;
 
   pub fn command() 
   {
-    let client = Client::new();
+    let output = Command::new( "python3" )
+    .arg( "/usr/src/dogs/ml_project/predict.py" )
+    .output()
+    .expect( "Failed to run command 'predict' " );
 
-    let response = client
-    .post( "http://dogs-ml:5000/predict" )
-    .send()
-    .expect( "Failed to send request" );
-
-    if response.status().is_success() 
+    if output.status.success()
     {
-      let script_response : ScriptResponse = response.json().unwrap();
-      match script_response.status.as_str() 
-      {
-        "success" => println!( "Success:\n{}", script_response.output.unwrap_or_default() ),
-        "error" => eprintln!( "Error:\n{}", script_response.error.unwrap_or_default() ),
-        _ => eprintln!( "Unexpected response" ),
-      }
-    } 
+      println!( "Success!" )
+    }
     else 
     {
-      eprintln!( "HTTP Error: {}", response.status() );
+      eprint!( "Error!" )
     }
   }
 }
