@@ -32,7 +32,7 @@ mod private
     args : Args
   )
   {
-    
+    println!( "Estimate command!" );
   }
 
 }

@@ -1,16 +1,11 @@
 from scripts.file_functions import visualise_statistic
 from scripts.preprocessing import pred_df_preprocessing
-from scripts.predict import make_predictions
+from ml_project.src.scripts.make_predictions import make_predictions
 from scripts.statistic import get_dfs, prepare_dataset, train_model, test_model
 from utils.get_grades import get_grade_types
 from logger import GHLogger
 
 logger = GHLogger()
-
-def predict():
-    dfs_small, dfs_big = pred_df_preprocessing()
-    make_predictions(dfs_small)
-    make_predictions(dfs_big)
     
 def estimate():
     logger.debug("Getting grades...")

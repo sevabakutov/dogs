@@ -3,12 +3,13 @@
 
 mod private
 {
+  use core::str;
   use std::process::Command;
 
   pub fn command() 
   {
     let output = Command::new( "python3" )
-    .arg( "/usr/src/dogs/ml_project/predict.py" )
+    .arg( "/usr/src/ml_project/ml_project/src/scripts/predict.py" )
     .output()
     .expect( "Failed to run command 'predict' " );
 
@@ -18,7 +19,7 @@ mod private
     }
     else 
     {
-      eprint!( "Error!" )
+      eprint!( "Error!: {:?}", str::from_utf8( &output.stderr ) )
     }
   }
 }

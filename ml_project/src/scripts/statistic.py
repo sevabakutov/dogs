@@ -8,7 +8,7 @@ from sklearn.impute import KNNImputer
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
-from scripts.file_functions import load_model
+from file_functions import load_model
 from logger import GHLogger
 from settings import ENCODERS_DIR, IMPUTERS_DIR, MODELS_DIR, DATA_DIR, DATASET_DIR
 

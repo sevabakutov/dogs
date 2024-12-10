@@ -7,7 +7,7 @@ import random
 
 from settings import DATA_DIR
 from logger import GHLogger
-from scripts.file_functions import get_pred_file, load_dataset
+from file_functions import get_pred_file, load_dataset
 from crawling.scripts.race_spider import start_race_spider
 
 import sys
