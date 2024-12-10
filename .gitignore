@@ -6,11 +6,12 @@
 /cli_project/target
 /cli_project/Cargo.lock
 
-/ml_project/.secret
+/ml_project/.secret/.env
 /ml_project/venv
 /ml_project/logs
 /ml_project/data/to_pred
 /ml_project/data/train
+/ml_project/data/results/*
 
 /scripts/bin/build
 /scripts/bin/dist

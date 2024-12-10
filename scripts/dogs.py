@@ -1,9 +1,12 @@
+import os
 import sys
 import subprocess
 
 DOCKER_NAME = "dogs-cli"
-ENV_FILE = "../ml_project/.secret/.env"
-SHARED_DIR = "../ml_project/data/results:/usr/src/ml_project/ml_project/data/results"
+ENV_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'ml_project', '.secret', '.env')
+SHARED_DIR_LOCAL = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'ml_project', 'data', 'results')
+SHARED_DIR_DOCKER = "/usr/src/ml_project/ml_project/data/results"
+SHARED_DIR_PATH = f"{SHARED_DIR_LOCAL}:{SHARED_DIR_DOCKER}"
 
 def main():
     if len(sys.argv) < 2:
@@ -13,7 +16,7 @@ def main():
     command = [
         "docker", "run", "--rm",
         "--env-file", ENV_FILE,
-        "-v", SHARED_DIR,
+        "-v", SHARED_DIR_PATH,
         DOCKER_NAME, "dogs"
     ] + sys.argv[1:]
 
