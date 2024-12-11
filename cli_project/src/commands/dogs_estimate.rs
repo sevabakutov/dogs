@@ -2,6 +2,9 @@
 
 mod private
 {
+  use core::str;
+use std::process::Command;
+
   use clap::Parser;
   use serde::Serialize;
 
@@ -32,7 +35,31 @@ mod private
     args : Args
   )
   {
-    println!( "Estimate command!" );
+    match args
+    {
+      Args { dist, start_train, end_train, start_test, end_test, grade } =>
+      {
+        let output = Command::new( "python3" )
+        .arg( "/usr/src/ml_project/ml_project/src/scripts/estimate.py" )
+        .arg( dist )
+        .arg( start_train )
+        .arg( end_train )
+        .arg( start_test )
+        .arg( end_test )
+        .arg( grade )
+        .output()
+        .expect( "Failed to start estimate command" );
+
+        if output.status.success()
+        {
+          println!( "Success!" )
+        }
+        else 
+        {
+          eprintln!( "Error: {:?}", str::from_utf8( &output.stderr ) )    
+        }
+      }
+    }
   }
 
 }
